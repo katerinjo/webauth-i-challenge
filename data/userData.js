@@ -11,3 +11,9 @@ function readUser(username) {
 function allUsers() {
   return db('users').select();
 }
+
+module.exports = {
+  createUser,
+  readUser,
+  allUsers
+}
