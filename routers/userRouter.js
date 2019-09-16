@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const users = require('../data/userData');
+const restricted = require('../middleware/restricted');
 
 router.get('/', (req, res) => {
   res.status(200).json({ route: req.url, recieved: req.body });
@@ -35,6 +36,14 @@ router.post('/login', (req, res) => {
     .catch(error => {
       res.status(500).json(error);
     });
+});
+
+router.get('/users', restricted, (req, res) => {
+  users.allUsers()
+    .then(users => {
+      res.json(users);
+    })
+    .catch(err => res.send(err));
 });
 
 module.exports = router;
