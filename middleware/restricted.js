@@ -2,6 +2,7 @@ const users = require('../data/userData');
 const bcrypt = require('bcrypt');
 
 function restricted(req, res, next) {
+  console.log(req.session);
   if (req.session && req.session.user) {
     const { username, password } = req.session.user;
     users.readUser(username)

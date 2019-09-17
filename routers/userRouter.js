@@ -16,7 +16,7 @@ const sessionConfig = {
   saveUninitialized: true
 };
 
-router.use(session(session(Config)));
+router.use(session(sessionConfig));
 
 router.get('/', (req, res) => {
   res.status(200).json({ route: req.url, recieved: req.body });
@@ -43,6 +43,7 @@ router.post('/login', (req, res) => {
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
+        console.log(user)
         req.session.user = user;
         res.status(200).json({ message: `Welcome ${user.username}!` });
       } else {
