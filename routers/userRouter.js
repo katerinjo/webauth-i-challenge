@@ -2,6 +2,19 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const users = require('../data/userData');
 const restricted = require('../middleware/restricted');
+const session = require('express-session');
+
+const sessionConfig = {
+  name: 'user-session',
+  secret: process.env.SESSION_SECRET || "it's a secret",
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24,
+    secure: process.env.SESSION_SECURE || true,
+    httpOnly: true
+  },
+  resave: false,
+  saveUninitialized: true
+};
 
 router.get('/', (req, res) => {
   res.status(200).json({ route: req.url, recieved: req.body });
